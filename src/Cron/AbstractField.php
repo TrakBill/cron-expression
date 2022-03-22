@@ -126,14 +126,14 @@ abstract class AbstractField implements FieldInterface
             }
             else {
                 $range = array_map('trim', explode('/', $expression, 2));
-                $stepSize = isset($range[1]) ? $range[1] : 0;
+                $stepSize = isset($range[1]) ? $range[1] : 1;
                 $range = $range[0];
                 $range = explode('-', $range, 2);
                 $offset = $range[0];
                 $to = isset($range[1]) ? $range[1] : $max;
             }
             $offset = $offset == '*' ? 0 : $offset;
-            for ($i = $offset; $i <= $to; $i += $stepSize) {
+            for ($i = $offset; $i <= $to; $i += max($stepSize, 1)) {
                 $values[] = $i;
             }
             sort($values);
